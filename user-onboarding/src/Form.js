@@ -11,26 +11,22 @@ const UserForm = ({values, errors, touched}) => {
       <div>
       <Field name="name" type="text" placeholder="Name" />
       {touched.name && errors.name ? (<div>{errors.name}</div>) : null}
-      <ErrorMessage name="name" component="div" className="red" />
       </div>
 
       <div>
       <Field name="email" type="email" placeholder="Email" />
       {touched.email && errors.email ? (<div>{errors.email}</div>) : null}
-      <ErrorMessage name="email" component="div" className="red" />
       </div>
       
       <div>
-      <Field name="password" type="text" placeholder="Password" />
+      <Field name="password" type="password" placeholder="Password" />
       {touched.password && errors.password ? (<div>{errors.password}</div>) : null}
-      <ErrorMessage name="password" component="div" className="red" />
       </div>
 
       <label>
         Accept Terms of Service
       <Field name="tos" type="checkbox" checked={values.tos} />
       {touched.tos && errors.tos ? (<div>{errors.tos}</div>) : null}
-      <ErrorMessage name="tos" component="div" className="red" />
       </label>
 
       <button>Submit</button>
@@ -72,7 +68,6 @@ const FormikUserForm = withFormik({
         console.log(response);
         resetForm();
         setSubmitting(false);
-        setUsers({...users, values})
       })
       .catch(error => {
         console.log(error.message);
