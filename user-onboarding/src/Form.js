@@ -64,8 +64,18 @@ const FormikUserForm = withFormik({
       .required("You have to agree to the Terms of Service")
   }),
 
-  handleSubmit(values) {
+  handleSubmit(values, {resetForm, setSubmitting}) {
     console.log(values);
+    axios.post('https://reqres.in/api/users', values)
+      .then(response => {
+        console.log(response);
+        resetForm();
+        setSubmitting(false);
+      })
+      .catch(error => {
+        console.log(error.message);
+        setSubmitting(false);
+      });
   }
 })(UserForm);
 
