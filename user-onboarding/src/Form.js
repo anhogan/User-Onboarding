@@ -3,7 +3,7 @@ import { withFormik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
-const UserForm = ({ values, errors, touched, status }) => {
+const UserForm = ({ values, errors, touched, status, isSubmitting }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const UserForm = ({ values, errors, touched, status }) => {
         </label>
 
         <div>
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={isSubmitting}>Submit</button>
         </div>
       </Form>
 
@@ -59,6 +59,7 @@ const UserForm = ({ values, errors, touched, status }) => {
         <div key={user.id}>
           <h4>{user.name}</h4>
           <p>Email: {user.email}</p>
+          <p>Role: {user.role}</p>
         </div>
       ))}
     </div>
@@ -72,7 +73,7 @@ const FormikUserForm = withFormik({
       email: email || '',
       password: password || '',
       tos: tos || false,
-      role: role || ''
+      role: role || 'Engineering'
     }
   },
 
@@ -93,9 +94,12 @@ const FormikUserForm = withFormik({
       .required("You have to agree to the Terms of Service")
   }),
 
-  handleSubmit(values, { resetForm, setSubmitting, setStatus }) {
+  handleSubmit(values, { resetForm, setErrors, setSubmitting, setStatus }) {
     console.log(values);
-    axios.post('https://reqres.in/api/users', values)
+    if (values.email === "waffle@syrup.com") {
+      setErrors({email: "That email is already taken"});
+    } else {
+      axios.post('https://reqres.in/api/users', values)
       .then(response => {
         console.log(response);
         resetForm();
@@ -107,6 +111,7 @@ const FormikUserForm = withFormik({
         setSubmitting(false);
       });
   }
+    }
 })(UserForm);
 
 export default FormikUserForm;
