@@ -29,6 +29,19 @@ const UserForm = ({ values, errors, touched, status }) => {
           {touched.password && errors.password ? (<div>{errors.password}</div>) : null}
         </div>
 
+        <div>
+          <Field name="role" as="select">
+            <option disabled>Select Your Role</option>
+            <option>Customer Success</option>
+            <option>Sales</option>
+            <option>Product</option>
+            <option>Marketing</option>
+            <option>Engineering</option>
+            <option>Other</option>
+          </Field>
+          {touched.role && errors.role ? (<div>{errors.role}</div>) : null}
+        </div>
+
         <label>
           Accept Terms of Service
           <div>
@@ -53,12 +66,13 @@ const UserForm = ({ values, errors, touched, status }) => {
 };
 
 const FormikUserForm = withFormik({
-  mapPropsToValues({ name, email, password, tos }) {
+  mapPropsToValues({ name, email, password, tos, role }) {
     return {
       name: name || '',
       email: email || '',
       password: password || '',
-      tos: tos || false
+      tos: tos || false,
+      role: role || ''
     }
   },
 
