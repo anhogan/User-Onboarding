@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withFormik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
-
 const UserForm = ({values, errors, touched}) => {
+  const [users, setUsers] = useState([]);
+
   return (
     <Form>
       <div>
@@ -71,6 +72,7 @@ const FormikUserForm = withFormik({
         console.log(response);
         resetForm();
         setSubmitting(false);
+        setUsers({...users, values})
       })
       .catch(error => {
         console.log(error.message);
