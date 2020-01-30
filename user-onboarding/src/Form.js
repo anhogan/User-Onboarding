@@ -7,23 +7,32 @@ import axios from 'axios';
 const UserForm = ({values, errors, touched}) => {
   return (
     <Form>
+      <div>
       <Field name="name" type="text" placeholder="Name" />
       {touched.name && errors.name ? (<div>{errors.name}</div>) : null}
       <ErrorMessage name="name" component="div" className="red" />
+      </div>
 
+      <div>
       <Field name="email" type="email" placeholder="Email" />
       {touched.email && errors.email ? (<div>{errors.email}</div>) : null}
       <ErrorMessage name="email" component="div" className="red" />
+      </div>
       
+      <div>
       <Field name="password" type="text" placeholder="Password" />
       {touched.password && errors.password ? (<div>{errors.password}</div>) : null}
       <ErrorMessage name="password" component="div" className="red" />
+      </div>
 
+      <label>
+        Accept Terms of Service
       <Field name="tos" type="checkbox" checked={values.tos} />
       {touched.tos && errors.tos ? (<div>{errors.tos}</div>) : null}
       <ErrorMessage name="tos" component="div" className="red" />
+      </label>
 
-      <input type="submit" />
+      <button>Submit</button>
     </Form>
   )
 };
