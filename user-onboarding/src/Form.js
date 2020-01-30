@@ -9,27 +9,31 @@ const UserForm = ({values, errors, touched}) => {
   return (
     <Form>
       <div>
-      <Field name="name" type="text" placeholder="Name" />
-      {touched.name && errors.name ? (<div>{errors.name}</div>) : null}
+        <Field name="name" type="text" placeholder="Name" />
+        {touched.name && errors.name ? (<div>{errors.name}</div>) : null}
       </div>
 
       <div>
-      <Field name="email" type="email" placeholder="Email" />
-      {touched.email && errors.email ? (<div>{errors.email}</div>) : null}
+        <Field name="email" type="email" placeholder="Email" />
+        {touched.email && errors.email ? (<div>{errors.email}</div>) : null}
       </div>
       
       <div>
-      <Field name="password" type="password" placeholder="Password" />
-      {touched.password && errors.password ? (<div>{errors.password}</div>) : null}
+        <Field name="password" type="password" placeholder="Password" />
+        {touched.password && errors.password ? (<div>{errors.password}</div>) : null}
       </div>
 
       <label>
         Accept Terms of Service
-      <Field name="tos" type="checkbox" checked={values.tos} />
-      {touched.tos && errors.tos ? (<div>{errors.tos}</div>) : null}
+        <div>
+          <Field name="tos" type="checkbox" checked={values.tos} />
+          {touched.tos && errors.tos ? (<div>{errors.tos}</div>) : null}
+        </div>
       </label>
 
-      <button>Submit</button>
+      <div>
+        <button>Submit</button>
+      </div>
     </Form>
   )
 };
