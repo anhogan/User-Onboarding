@@ -1,45 +1,59 @@
-import React, { useState } from 'react';
-import { withFormik, Field, Form, ErrorMessage } from 'formik';
+import React, { useState, useEffect } from 'react';
+import { withFormik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
-const UserForm = ({values, errors, touched}) => {
+const UserForm = ({ values, errors, touched, status }) => {
   const [users, setUsers] = useState([]);
 
+  useEffect(() => {
+    console.log('Status has changed', status);
+    status && setUsers(users => [...users, status])
+  }, [status]);
+
   return (
-    <Form>
-      <div>
-        <Field name="name" type="text" placeholder="Name" />
-        {touched.name && errors.name ? (<div>{errors.name}</div>) : null}
-      </div>
-
-      <div>
-        <Field name="email" type="email" placeholder="Email" />
-        {touched.email && errors.email ? (<div>{errors.email}</div>) : null}
-      </div>
-      
-      <div>
-        <Field name="password" type="password" placeholder="Password" />
-        {touched.password && errors.password ? (<div>{errors.password}</div>) : null}
-      </div>
-
-      <label>
-        Accept Terms of Service
+    <div>
+      <Form>
         <div>
-          <Field name="tos" type="checkbox" checked={values.tos} />
-          {touched.tos && errors.tos ? (<div>{errors.tos}</div>) : null}
+          <Field name="name" type="text" placeholder="Name" />
+          {touched.name && errors.name ? (<div>{errors.name}</div>) : null}
         </div>
-      </label>
 
-      <div>
-        <button>Submit</button>
-      </div>
-    </Form>
+        <div>
+          <Field name="email" type="email" placeholder="Email" />
+          {touched.email && errors.email ? (<div>{errors.email}</div>) : null}
+        </div>
+        
+        <div>
+          <Field name="password" type="password" placeholder="Password" />
+          {touched.password && errors.password ? (<div>{errors.password}</div>) : null}
+        </div>
+
+        <label>
+          Accept Terms of Service
+          <div>
+            {touched.tos && errors.tos ? (<div>{errors.tos}</div>) : null}
+            <Field name="tos" type="checkbox" checked={values.tos} />
+          </div>
+        </label>
+
+        <div>
+          <button type="submit">Submit</button>
+        </div>
+      </Form>
+
+      {users.map((user) => (
+        <div key={user.id}>
+          <h4>{user.name}</h4>
+          <p>Email: {user.email}</p>
+        </div>
+      ))}
+    </div>
   )
 };
 
 const FormikUserForm = withFormik({
-  mapPropsToValues({name, email, password, tos}) {
+  mapPropsToValues({ name, email, password, tos }) {
     return {
       name: name || '',
       email: email || '',
@@ -65,13 +79,14 @@ const FormikUserForm = withFormik({
       .required("You have to agree to the Terms of Service")
   }),
 
-  handleSubmit(values, {resetForm, setSubmitting}) {
+  handleSubmit(values, { resetForm, setSubmitting, setStatus }) {
     console.log(values);
     axios.post('https://reqres.in/api/users', values)
       .then(response => {
         console.log(response);
         resetForm();
         setSubmitting(false);
+        setStatus(response.data);
       })
       .catch(error => {
         console.log(error.message);
