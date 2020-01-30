@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withFormik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import styled from 'styled-components';
+import './Form.css';
 
 const UserForm = ({ values, errors, touched, status, isSubmitting }) => {
   const [users, setUsers] = useState([]);
@@ -14,23 +14,24 @@ const UserForm = ({ values, errors, touched, status, isSubmitting }) => {
 
   return (
     <div>
+      <h2>Sign Up</h2>
       <Form>
-        <div>
+        <div className="field_div">
           <Field name="name" type="text" placeholder="Name" />
           {touched.name && errors.name ? (<div>{errors.name}</div>) : null}
         </div>
 
-        <div>
+        <div className="field_div">
           <Field name="email" type="email" placeholder="Email" />
           {touched.email && errors.email ? (<div>{errors.email}</div>) : null}
         </div>
         
-        <div>
+        <div className="field_div">
           <Field name="password" type="password" placeholder="Password" />
           {touched.password && errors.password ? (<div>{errors.password}</div>) : null}
         </div>
 
-        <div>
+        <div className="field_div">
           <Field name="role" as="select">
             <option disabled>Select Your Role</option>
             <option>Customer Success</option>
@@ -45,24 +46,26 @@ const UserForm = ({ values, errors, touched, status, isSubmitting }) => {
 
         <label>
           Accept Terms of Service
-          <div>
+          <div className="check_div">
             {touched.tos && errors.tos ? (<div>{errors.tos}</div>) : null}
             <Field name="tos" type="checkbox" checked={values.tos} />
           </div>
         </label>
 
-        <div>
+        <div className="button_div">
           <button type="submit" disabled={isSubmitting}>Submit</button>
         </div>
       </Form>
 
-      {users.map((user) => (
-        <div key={user.id}>
-          <h4>{user.name}</h4>
-          <p>Email: {user.email}</p>
-          <p>Role: {user.role}</p>
-        </div>
-      ))}
+      <div className="wrap_users">
+        {users.map((user) => (
+          <div className="user_container" key={user.id}>
+            <h4>{user.name}</h4>
+            <p><strong>Email</strong>: {user.email}</p>
+            <p><strong>Role</strong>: {user.role}</p>
+          </div>
+        ))}
+      </div>
     </div>
   )
 };

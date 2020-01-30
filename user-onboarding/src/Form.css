@@ -1,0 +1,49 @@
+.field_div {
+  margin: 1% auto;
+  width: 30%;
+}
+
+.field_div input {
+  width: 50%;
+  border: 1px solid gray;
+}
+
+.field_div div {
+  font-size: .6rem;
+  color: red;
+  margin: 1%;
+}
+
+label {
+  font-size: .6rem;
+}
+
+.check_div {
+  margin-right: auto;
+  margin-left: auto;
+  width: 30%;
+  align-items: center;
+}
+
+.check_div div {
+  font-size: .6rem;
+  color: red;
+  margin: 1%;
+}
+
+button {
+  width: 5%;
+  margin: 1%;
+}
+
+.wrap_users {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.user_container {
+  border: 2px solid black;
+  width: 30%;
+  margin: 1%;
+}
